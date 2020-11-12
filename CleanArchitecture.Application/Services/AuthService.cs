@@ -25,7 +25,7 @@ namespace CleanArchitecture.Application.Services
             _appSettings = appSettings.Value;
         }
 
-        public User Authenticate(string username, string password)
+        public ApplicationUser Authenticate(string username, string password)
         {
             var user = _uow.UserRepository.Get(filter: u => u.Username == username && u.Password == password).FirstOrDefault();
             if (user == null)

@@ -8,6 +8,6 @@ namespace CleanArchitecture.Application.Intarfaces
 {
     public interface IAuthService
     {
-        User Authenticate(string username, string password);
+        ApplicationUser Authenticate(string username, string password);
     }
 }
