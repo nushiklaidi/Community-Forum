@@ -27,28 +27,7 @@ namespace CleanArchitecture.Application.Services
 
         public ApplicationUser Authenticate(string username, string password)
         {
-            var user = _uow.UserRepository.Get(filter: u => u.Username == username && u.Password == password).FirstOrDefault();
-            if (user == null)
-            {
-                return null;
-            }
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.SecretKey);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.Name, user.Name.ToString()),
-                    new Claim(ClaimTypes.Role, user.Role)
-                }),
-                Expires = DateTime.UtcNow.AddDays(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            user.Token = tokenHandler.WriteToken(token);
-
-            return user;
+            throw new NotImplementedException();
         }
     }
 }
