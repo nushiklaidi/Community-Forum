@@ -5,6 +5,7 @@ using CleanArchitecture.Application.ViewModels;
 using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Infra.Data.Repositories;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CleanArchitecture.Infra.IoC
@@ -16,6 +17,7 @@ namespace CleanArchitecture.Infra.IoC
 
             //CleanArchitecture.Application
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IEmailSender, EmailSender>();
 
             //CleanArchitecture.Domain.Interfaces | CleanArchitecture.Infra.Data.Repositories
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

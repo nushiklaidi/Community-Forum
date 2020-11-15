@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CleanArchitecture.Application.Intarfaces;
 using CleanArchitecture.Application.Services;
 using CleanArchitecture.Domain.Interfaces;
+using CleanArchitecture.Domain.Model;
 using CleanArchitecture.Infra.Data.Context;
 using CleanArchitecture.Infra.Data.Repositories;
 using CleanArchitecture.Infra.IoC;
@@ -38,12 +39,13 @@ namespace CleanArchitecture.MVC
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddControllersWithViews();
+            services.AddRazorPages();
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -86,13 +88,14 @@ namespace CleanArchitecture.MVC
             app.UseRouting();
 
             app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
 
