@@ -21,12 +21,15 @@ namespace CleanArchitecture.MVC.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IEmailSender _emailSender;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager, 
             ILogger<LoginModel> logger,
+            IEmailSender emailSender,
             UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
+            _emailSender = emailSender;
             _signInManager = signInManager;
             _logger = logger;
         }

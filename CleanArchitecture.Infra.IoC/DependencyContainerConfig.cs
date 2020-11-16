@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Intarfaces;
+﻿using CleanArchitecture.Application.AppOptions;
+using CleanArchitecture.Application.Intarfaces;
 using CleanArchitecture.Application.Services;
 using CleanArchitecture.Application.Validation;
 using CleanArchitecture.Application.ViewModels;

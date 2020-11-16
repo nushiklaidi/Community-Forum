@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CleanArchitecture.Application.AppOptions;
 using CleanArchitecture.Application.Intarfaces;
 using CleanArchitecture.Application.Services;
 using CleanArchitecture.Domain.Interfaces;
@@ -38,8 +39,7 @@ namespace CleanArchitecture.MVC
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(
@@ -65,6 +65,18 @@ namespace CleanArchitecture.MVC
                 options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = false;
             });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            });
+
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+            services.AddMvc();
+
+            services.Configure<EmailOptions>(Configuration);
 
             RegisterServices(services);
         }

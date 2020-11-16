@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CleanArchitecture.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
+using CleanArchitecture.Application.Model;
 
 namespace CleanArchitecture.MVC.Controllers
 {
