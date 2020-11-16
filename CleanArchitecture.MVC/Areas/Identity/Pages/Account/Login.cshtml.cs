@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using NToastNotify;
 
 namespace CleanArchitecture.MVC.Areas.Identity.Pages.Account
 {
@@ -22,16 +23,19 @@ namespace CleanArchitecture.MVC.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IToastNotification _toastNotification;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager, 
             ILogger<LoginModel> logger,
             IEmailSender emailSender,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IToastNotification toastNotification)
         {
             _userManager = userManager;
             _emailSender = emailSender;
             _signInManager = signInManager;
             _logger = logger;
+            _toastNotification = toastNotification;
         }
 
         [BindProperty]
@@ -88,6 +92,7 @@ namespace CleanArchitecture.MVC.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    _toastNotification.AddSuccessToastMessage($"Logged in as {Input.Email}");
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

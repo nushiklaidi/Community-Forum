@@ -24,7 +24,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                    </ul>                    
+                    </ul>
                 </div>
                 <div class="float-right">
                     <partial name="_LoginPartial" />
@@ -36,6 +36,7 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+        @await Component.InvokeAsync("NToastNotify")
     </div>
 
     <footer class="border-top footer text-muted">
@@ -46,6 +47,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)    
 </body>
 </html>

@@ -19,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NToastNotify;
 
 namespace CleanArchitecture.MVC
 {
@@ -74,7 +75,13 @@ namespace CleanArchitecture.MVC
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddMvc();
+            services.AddMvc().AddNToastNotifyNoty(new NotyOptions
+            {
+                Layout = "bottomRight",
+                ProgressBar = true,
+                Timeout = 5000,
+                Theme = "metroui"
+            });
 
             services.Configure<EmailOptions>(Configuration);
 
@@ -101,6 +108,8 @@ namespace CleanArchitecture.MVC
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseNToastNotify();
 
             app.UseEndpoints(endpoints =>
             {
