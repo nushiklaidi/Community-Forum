@@ -46,6 +46,7 @@ namespace CleanArchitecture.MVC
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"));
             });
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
