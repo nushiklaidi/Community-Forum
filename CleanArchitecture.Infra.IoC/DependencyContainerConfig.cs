@@ -17,6 +17,7 @@ namespace CleanArchitecture.Infra.IoC
         {
 
             //CleanArchitecture.Application
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEmailSender, EmailSender>();
 

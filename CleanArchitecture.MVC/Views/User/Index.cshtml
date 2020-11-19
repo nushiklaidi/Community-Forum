@@ -1,0 +1,52 @@
+﻿@using CleanArchitecture.Domain.Model
+@model IEnumerable<ApplicationUser>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-6">
+        <h2>User List</h2>
+    </div>
+</div>
+<br />
+<div>
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(m => m.UserName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.MemberSince)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.IsActive)
+                    </th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.MemberSince)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.IsActive)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</div>
