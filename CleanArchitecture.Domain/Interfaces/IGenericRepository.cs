@@ -9,8 +9,8 @@ namespace CleanArchitecture.Domain.Interfaces
     {
         Task<IEnumerable<T>> GetAll();
         Task<IEnumerable<T>> GetAll(string includeProperties);
-        IEnumerable<T> Get(Expression<Func<T, bool>> filter, string includeProperties = "");
-        IEnumerable<T> Get(Expression<Func<T, bool>> filter, string[] includeProperties);
+        Task<IEnumerable<T>> Get(Expression<Func<T, bool>> filter, string includeProperties = "");
+        Task<IEnumerable<T>> Get(Expression<Func<T, bool>> filter, string[] includeProperties);
         Task<T> GetById(object id);
 
         Task Insert(T entity);

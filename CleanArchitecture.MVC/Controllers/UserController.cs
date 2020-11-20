@@ -1,10 +1,8 @@
 ﻿using CleanArchitecture.Application.Intarfaces;
 using CleanArchitecture.Application.Model;
+using CleanArchitecture.Application.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.MVC.Controllers
@@ -21,7 +19,11 @@ namespace CleanArchitecture.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _userService.GetAll());
+            var model = new UserListViewModel
+            {
+                Users = await _userService.GetAll()
+            };
+            return View(model);
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿@using CleanArchitecture.Domain.Model
-@model IEnumerable<ApplicationUser>
+﻿@using CleanArchitecture.Application.ViewModels
+@model UserListViewModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -11,26 +11,18 @@
 </div>
 <br />
 <div>
-    @if (Model.Any())
+    @if (Model.Users.Any())
     {
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th>
-                        @Html.DisplayNameFor(m => m.UserName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.Email)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.MemberSince)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.IsActive)
-                    </th>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Member Since</th>
+                    <th>Active</th>
                 </tr>
             </thead>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Users)
             {
                 <tr>
                     <td>
@@ -43,10 +35,21 @@
                         @Html.DisplayFor(m => item.MemberSince)
                     </td>
                     <td>
-                        @Html.DisplayFor(m => item.IsActive)
+                        @if (item.IsActive)
+                        {
+                            <a class="btn btn-primary btn-sm" asp-action="" asp-route-id="@item.Id">Deactivate</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-secondary btn-sm" asp-action="" asp-route-id="@item.Id">Activate</a>
+                        }
                     </td>
                 </tr>
             }
         </table>
+    }
+    else
+    {
+        <p>No Users</p>
     }
 </div>

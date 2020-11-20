@@ -41,15 +41,15 @@ namespace CleanArchitecture.Infra.Data.Repositories
             }
         }
 
-        public virtual IEnumerable<T> Get(Expression<Func<T, bool>> filter, string[] includeProperties)
+        public async virtual Task<IEnumerable<T>> Get(Expression<Func<T, bool>> filter, string[] includeProperties)
         {
-            return GetQuery(filter, includeProperties).ToList();
+            return await GetQuery(filter, includeProperties).ToListAsync();
         }
 
-        public virtual IEnumerable<T> Get(Expression<Func<T, bool>> filter, string includeProperties = "")
+        public virtual async Task<IEnumerable<T>> Get(Expression<Func<T, bool>> filter, string includeProperties = "")
         {
             var properties = includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            return Get(filter, properties);
+            return await GetQuery(filter, properties).ToListAsync();
         }
 
         public async Task<T> GetById(object id)
