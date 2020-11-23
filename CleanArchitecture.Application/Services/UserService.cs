@@ -18,10 +18,38 @@ namespace CleanArchitecture.Application.Services
         {
             _uow = uow;
         }
-
+               
         public async Task<IEnumerable<ApplicationUser>> GetAll()
         {
             return await _uow.UserRepository.GetAll();
+        }
+
+        public async Task ActivateUser(string id)
+        {
+            if (id != null)
+            {
+                var user = await _uow.UserRepository.GetById(id);
+                if(user != null)
+                {
+                    user.IsActive = true;
+                    await _uow.SavechangesAsync();
+                }
+            }
+                
+        }
+
+        public async Task DeactivateUser(string id)
+        {
+            if (id != null)
+            {
+                var user = await _uow.UserRepository.GetById(id);
+                if (user != null)
+                {
+                    user.IsActive = false;
+                    await _uow.SavechangesAsync();
+                }
+            }
+
         }
     }
 }

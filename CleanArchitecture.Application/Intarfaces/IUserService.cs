@@ -10,5 +10,7 @@ namespace CleanArchitecture.Application.Intarfaces
     public interface IUserService
     {
         Task<IEnumerable<ApplicationUser>> GetAll();
+        Task ActivateUser(string id);
+        Task DeactivateUser(string id);
     }
 }

@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using CleanArchitecture.Domain.Model
+@using CleanArchitecture.Application.Model
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -15,14 +16,17 @@
                 <button id="logout" type="submit" class="nav-link btn btn-link text-light">Logout</button>
             </form>
         </li>
-        <li class="nav-item dropdown text-white">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Manage
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                <a class="dropdown-item text-dark" asp-area="" asp-controller="User" asp-action="Index">User</a>
-            </div>
-        </li>
+        @if (User.IsInRole(AppConst.Role.AdminRole))
+        {
+            <li class="nav-item dropdown text-white">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Manage
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                    <a class="dropdown-item text-dark" asp-area="" asp-controller="User" asp-action="Index">User</a>
+                </div>
+            </li>
+        }
     }
     else
     {

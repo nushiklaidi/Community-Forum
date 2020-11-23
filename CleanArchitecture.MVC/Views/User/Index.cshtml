@@ -19,7 +19,7 @@
                     <th>User Name</th>
                     <th>Email</th>
                     <th>Member Since</th>
-                    <th>Active</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             @foreach (var item in Model.Users)
@@ -37,12 +37,13 @@
                     <td>
                         @if (item.IsActive)
                         {
-                            <a class="btn btn-primary btn-sm" asp-action="" asp-route-id="@item.Id">Deactivate</a>
+                            <a class="btn btn-outline-primary btn-sm" asp-action="DeactivateUser" asp-route-id="@item.Id">Deactivate</a>
                         }
                         else
                         {
-                            <a class="btn btn-secondary btn-sm" asp-action="" asp-route-id="@item.Id">Activate</a>
+                            <a class="btn btn-outline-secondary btn-sm" asp-action="AcivateUser" asp-route-id="@item.Id">Activate</a>
                         }
+                        <a class="btn btn-outline-success btn-sm" asp-action="" asp-route-id="@item.Id">Edit</a>
                     </td>
                 </tr>
             }
