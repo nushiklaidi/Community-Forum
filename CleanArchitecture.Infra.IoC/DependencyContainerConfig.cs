@@ -30,6 +30,7 @@ namespace CleanArchitecture.Infra.IoC
 
             //Validator
             services.AddTransient<IValidator<AuthViewModel>, AuthViewModelVal>();
+            services.AddTransient<IValidator<UserViewModel>, UserViewModelVal>();
         }
     }
 }

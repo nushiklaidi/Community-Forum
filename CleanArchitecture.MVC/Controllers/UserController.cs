@@ -4,6 +4,7 @@ using CleanArchitecture.Application.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using System;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.MVC.Controllers
@@ -29,12 +30,31 @@ namespace CleanArchitecture.MVC.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id != null)
+            {
+                var modelDb = await _userService.Get(id);
+                return View(modelDb);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(UserViewModel model)
+        {
+            await _userService.Update(model);
+            _toastNotification.AddSuccessToastMessage("The user has been updated");
+            return RedirectToAction(nameof(Index));
+        }
+
         public async Task<IActionResult> AcivateUser(string id)
         {
             if (id != null)
             {
                 await _userService.ActivateUser(id);
-                _toastNotification.AddSuccessToastMessage("The user has been activated");                
+                _toastNotification.AddSuccessToastMessage("The user has been activated");
             }
             return RedirectToAction(nameof(Index));
         }
