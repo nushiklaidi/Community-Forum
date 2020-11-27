@@ -1,13 +1,14 @@
-﻿using CleanArchitecture.Application.Exceptions;
-using CleanArchitecture.Application.Intarfaces;
+﻿using CleanArchitecture.Application.Intarfaces;
 using CleanArchitecture.Application.ViewModels;
 using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Domain.Model;
 using CleanArchitecture.Infra.Data.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Services
@@ -24,7 +25,7 @@ namespace CleanArchitecture.Application.Services
             _db = db;
             _userManager = userManager;
         }
-        
+               
         public async Task<IEnumerable<ApplicationUser>> GetAll()
         {
             return await _uow.UserRepository.GetAll();
@@ -33,10 +34,6 @@ namespace CleanArchitecture.Application.Services
         public async Task<UserViewModel> Get(string id)
         {
             var modelDb = await _uow.UserRepository.GetById(id);
-            if (modelDb is null)
-            {
-                throw new ApplicationException("Not Found");
-            }
             var userRole = _db.UserRoles.ToList();
             var roles = _db.Roles.ToList();
             var role = userRole.FirstOrDefault(u => u.UserId == modelDb.Id);
@@ -62,11 +59,8 @@ namespace CleanArchitecture.Application.Services
         public async Task Update(UserViewModel model)
         {
             var modelDb = await _uow.UserRepository.GetById(model.Id);
-            if (modelDb is null)
-            {
-                throw new ApplicationException("Not Found");
-            }
             var userRole = _db.UserRoles.FirstOrDefault(u => u.UserId == modelDb.Id);
+
             if (userRole.RoleId != model.RoleId)
             {
                 var previousRoleName = _db.Roles.Where(u => u.Id == userRole.RoleId).Select(e => e.Name).FirstOrDefault();
@@ -78,50 +72,34 @@ namespace CleanArchitecture.Application.Services
                 //Add the new role
                 await _userManager.AddToRoleAsync(modelDb, newRoleName);
             }
+
             modelDb.UserName = model.UserName;
-            try
-            {
-                await _uow.SavechangesAsync();
-            }
-            catch (System.Exception)
-            {
-                throw new ApplicationException("Update failed");
-            }                      
+            await _uow.SavechangesAsync();            
         }
 
         public async Task ActivateUser(string id)
         {
-            var user = await _uow.UserRepository.GetById(id);
-            if (user is null)
+            if (id != null)
             {
-                throw new ApplicationException("Not Found");
-            }
-            user.IsActive = true;
-            try
-            {
-                await _uow.SavechangesAsync();
-            }
-            catch (System.Exception)
-            {
-                throw new ApplicationException("Update failed");
-            }           
+                var user = await _uow.UserRepository.GetById(id);
+                if(user != null)
+                {
+                    user.IsActive = true;
+                    await _uow.SavechangesAsync();
+                }
+            }                
         }
 
         public async Task DeactivateUser(string id)
         {
-            var user = await _uow.UserRepository.GetById(id);
-            if (user is null)
+            if (id != null)
             {
-                throw new ApplicationException("Not Found");
-            }
-            user.IsActive = false;
-            try
-            {
-                await _uow.SavechangesAsync();
-            }
-            catch (System.Exception)
-            {
-                throw new ApplicationException("Update failed");
+                var user = await _uow.UserRepository.GetById(id);
+                if (user != null)
+                {
+                    user.IsActive = false;
+                    await _uow.SavechangesAsync();
+                }
             }
         }        
     }
