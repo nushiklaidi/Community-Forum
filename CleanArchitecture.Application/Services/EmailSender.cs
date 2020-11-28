@@ -4,8 +4,6 @@ using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Services
@@ -39,9 +37,9 @@ namespace CleanArchitecture.Application.Services
             {
                 return client.SendEmailAsync(msg);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
+                throw new ApplicationException("Email doesn't send");
             }
             return null;
         }

@@ -1,5 +1,4 @@
-﻿using CleanArchitecture.Application.Exceptions;
-using CleanArchitecture.Application.Intarfaces;
+﻿using CleanArchitecture.Application.Intarfaces;
 using CleanArchitecture.Application.ViewModels;
 using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Domain.Model;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace CleanArchitecture.Application.Services
 {
@@ -83,7 +83,7 @@ namespace CleanArchitecture.Application.Services
             {
                 await _uow.SavechangesAsync();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 throw new ApplicationException("Update failed");
             }                      
@@ -101,7 +101,7 @@ namespace CleanArchitecture.Application.Services
             {
                 await _uow.SavechangesAsync();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 throw new ApplicationException("Update failed");
             }           
@@ -119,7 +119,7 @@ namespace CleanArchitecture.Application.Services
             {
                 await _uow.SavechangesAsync();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 throw new ApplicationException("Update failed");
             }
