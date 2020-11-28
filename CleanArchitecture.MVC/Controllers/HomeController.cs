@@ -22,9 +22,19 @@ namespace CleanArchitecture.MVC.Controllers
         public IActionResult Error()
         {
             var exceptionDetails = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            ViewBag.ErrorMessage = exceptionDetails.Error.Message;
+            return View("Error");
+        }
 
-            ViewBag.ExceptionMessage = exceptionDetails.Error.Message;
-
+        [Route("Error/{statusCode}")]
+        public IActionResult HttpStatusCodeHandler(int statusCode)
+        {
+            switch (statusCode)
+            {
+                case 404:
+                    ViewBag.ErrorMessage = "Page 404 - Sorry, the resource you requested could not be found";
+                    break;
+            }
             return View("Error");
         }
     }

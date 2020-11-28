@@ -84,30 +84,37 @@ namespace CleanArchitecture.MVC.Areas.Identity.Pages.Account
         
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-                if (result.Succeeded && user.IsActive)
-                { 
-                    _toastNotification.AddInfoToastMessage($"Logged in as {user.UserName}");
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
+                if (user.IsActive)
                 {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _toastNotification.AddErrorToastMessage($"User account locked out.");
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
+                    var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        _toastNotification.AddInfoToastMessage("Logged in as {user.UserName}");
+                        _logger.LogInformation("User logged in.");
+                        return LocalRedirect(returnUrl);
+                    }
+                    if (result.RequiresTwoFactor)
+                    {
+                        return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    }
+                    if (result.IsLockedOut)
+                    {
+                        _toastNotification.AddErrorToastMessage("User account locked out.");
+                        _logger.LogWarning("User account locked out.");
+                        return RedirectToPage("./Lockout");
+                    }
+                    else
+                    {
+                        _toastNotification.AddErrorToastMessage("Invalid login attempt.");
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        return Page();
+                    }
                 }
                 else
                 {
-                    _toastNotification.AddErrorToastMessage($"Invalid login attempt.");
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    _toastNotification.AddErrorToastMessage("User has been deactivated");
+                    ModelState.AddModelError(string.Empty, "User has been deactivated");
                     return Page();
                 }
             }

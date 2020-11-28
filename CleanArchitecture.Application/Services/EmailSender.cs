@@ -41,7 +41,6 @@ namespace CleanArchitecture.Application.Services
             {
                 throw new ApplicationException("Email doesn't send");
             }
-            return null;
         }
     }
 }
