@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System;
+using CleanArchitecture.Application.Model;
 
 namespace CleanArchitecture.Application.Services
 {
@@ -41,13 +42,19 @@ namespace CleanArchitecture.Application.Services
             {
                 throw new ApplicationException("Not Found");
             }
-            if (modelDb.Id != currentUserId)
-            {
-                throw new ApplicationException("You can't view enother user profile");
-            }
+            
             var userRole = _db.UserRoles.ToList();
             var roles = _db.Roles.ToList();
             var role = userRole.FirstOrDefault(u => u.UserId == modelDb.Id);
+
+            var adminRole = userRole.FirstOrDefault(u => u.UserId == currentUserId);
+            var adminUserRole = roles.FirstOrDefault(u => u.Id == adminRole.RoleId);
+
+            if (modelDb.Id != currentUserId && adminUserRole.Name != AppConst.Role.AdminRole)
+            {
+                throw new ApplicationException("You can't view enother user profile");
+            }
+
             var model = new UserViewModel()
             {
                 Id = modelDb.Id,

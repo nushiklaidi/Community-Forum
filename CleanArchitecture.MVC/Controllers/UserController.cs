@@ -51,7 +51,7 @@ namespace CleanArchitecture.MVC.Controllers
         {
             await _userService.Update(model);
             _toastNotification.AddSuccessToastMessage("The user has been updated");
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]
