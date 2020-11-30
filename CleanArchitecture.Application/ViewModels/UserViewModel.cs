@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,7 +17,9 @@ namespace CleanArchitecture.Application.ViewModels
 
         public int Rating { get; set; }
 
-        public string ProfileImageUrl { get; set; }
+        public string ImageUrl { get; set; }
+
+        public IFormFile ProfileImageUrl { get; set; }
 
         [Display(Name = "Member Since")]
         public DateTime MemberSince { get; set; }

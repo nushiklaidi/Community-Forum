@@ -1,11 +1,25 @@
 ﻿@using CleanArchitecture.Application.ViewModels
 @model UserViewModel
 
-<div class="row">
-    <h4>User Profile</h4>
-    <hr />
-    <div class="col-6">
-        <form method="post" asp-controller="User" asp-action="Edit">
+<h4>User Profile</h4>
+<hr />
+<form method="post" asp-controller="User" asp-action="Edit" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-4 text-center">
+            @if (Model.ImageUrl != null)
+            {
+                <img src="@Model.ImageUrl" width="70%" />
+            }
+            else
+            {
+                <img src="/img/Default-Avatar.png" width="70%" />
+            }
+            <br />
+            <label class="btn btn-file text-center">
+                <input asp-for="ProfileImageUrl" type="file" value="Upload" />
+            </label>
+        </div>
+        <div class="col-md-6">
             <input asp-for="@Model.Id" hidden />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -33,10 +47,8 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-success">Update</button>
-                <a asp-action="Index" class="btn btn-warning" style="width:auto">Back to Users</a>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-warning" style="width:auto">Back to Home</a>
             </div>
-        </form>
+        </div>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-    </div>
-</div>
+</form>

@@ -11,7 +11,7 @@ namespace CleanArchitecture.Application.Intarfaces
     public interface IUserService
     {
         Task<IEnumerable<ApplicationUser>> GetAll();
-        Task<UserViewModel> Get(string id);
+        Task<UserViewModel> Get(string userId, string currentUserId);
         Task ActivateUser(string id);
         Task DeactivateUser(string id);
         Task Update(UserViewModel model);

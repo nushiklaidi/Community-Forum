@@ -9,24 +9,25 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a id="manage" class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+            <span class="nav-link text-light" title="Manage">Hello @UserManager.GetUserName(User)!</span>
         </li>
         <li class="nav-item">
             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button id="logout" type="submit" class="nav-link btn btn-link text-light">Logout</button>
             </form>
         </li>
-        @if (User.IsInRole(AppConst.Role.AdminRole))
-        {
-            <li class="nav-item dropdown text-white">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Manage
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+        <li class="nav-item dropdown text-white">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Manage
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                @if (User.IsInRole(AppConst.Role.AdminRole))
+                {
                     <a class="dropdown-item text-dark" asp-area="" asp-controller="User" asp-action="Index">User</a>
-                </div>
-            </li>
-        }
+                }
+                <a class="dropdown-item text-dark" asp-area="" asp-controller="User" asp-action="Edit" asp-route-id="@UserManager.GetUserId(User)">Profile</a>
+            </div>
+        </li>
     }
     else
     {
