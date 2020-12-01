@@ -43,13 +43,17 @@ namespace CleanArchitecture.Application.Services
                 throw new ApplicationException("Not Found");
             }
             
+            //Get the role of the userId
             var userRole = _db.UserRoles.ToList();
             var roles = _db.Roles.ToList();
             var role = userRole.FirstOrDefault(u => u.UserId == modelDb.Id);
 
+            //Get the role of current user
             var adminRole = userRole.FirstOrDefault(u => u.UserId == currentUserId);
             var adminUserRole = roles.FirstOrDefault(u => u.Id == adminRole.RoleId);
 
+            //If you are not your profile and you are not Admin role
+            //you can not view the profile
             if (modelDb.Id != currentUserId && adminUserRole.Name != AppConst.Role.AdminRole)
             {
                 throw new ApplicationException("You can't view another user profile");
