@@ -9,6 +9,9 @@ namespace CleanArchitecture.Infra.Data.Context
         public AppDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Forum> Forums { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<PostReply> PostReplies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
