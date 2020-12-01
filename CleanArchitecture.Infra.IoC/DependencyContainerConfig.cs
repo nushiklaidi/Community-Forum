@@ -18,12 +18,14 @@ namespace CleanArchitecture.Infra.IoC
 
             //CleanArchitecture.Application
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IForumService, ForumService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEmailSender, EmailSender>();
 
             //CleanArchitecture.Domain.Interfaces | CleanArchitecture.Infra.Data.Repositories
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IForumRepository, ForumRepository>();
 
             //CleanArchitecture.Domain.Interfaces | CleanArchitecture.Infra.Data.Repositories
             services.AddScoped<IUnitOfWork, UnitOfWork>();

@@ -11,5 +11,6 @@ namespace CleanArchitecture.Domain.Interfaces
         Task<int> SavechangesAsync();
 
         IUserRepository UserRepository { get; }
+        IForumRepository ForumRepository { get; }
     }
 }
