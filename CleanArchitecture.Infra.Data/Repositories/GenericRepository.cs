@@ -27,29 +27,29 @@ namespace CleanArchitecture.Infra.Data.Repositories
             return query;
         }
 
-        public async Task<IEnumerable<T>> GetAll(string includeProperties)
+        public IEnumerable<T> GetAll(string includeProperties)
         {
             if (!string.IsNullOrWhiteSpace(includeProperties))
             {
                 var arrProperties = includeProperties.Split(',');
-                return await GetQuery(includeProperties: arrProperties).ToListAsync<T>();
+                return GetQuery(includeProperties: arrProperties).ToList<T>();
             }
             else
             {
-                List<T> query = await dbSet.ToListAsync<T>();
+                List<T> query = dbSet.ToList<T>();
                 return query;
             }
         }
 
-        public async virtual Task<IEnumerable<T>> Get(Expression<Func<T, bool>> filter, string[] includeProperties)
+        public virtual IEnumerable<T> Get(Expression<Func<T, bool>> filter, string[] includeProperties)
         {
-            return await GetQuery(filter, includeProperties).ToListAsync();
+            return GetQuery(filter, includeProperties).ToList();
         }
 
-        public virtual async Task<IEnumerable<T>> Get(Expression<Func<T, bool>> filter, string includeProperties = "")
+        public virtual IEnumerable<T> Get(Expression<Func<T, bool>> filter, string includeProperties = "")
         {
             var properties = includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            return await GetQuery(filter, properties).ToListAsync();
+            return Get(filter, properties).ToList();
         }
 
         public async Task<T> GetById(object id)

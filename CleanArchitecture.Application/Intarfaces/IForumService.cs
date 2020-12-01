@@ -1,12 +1,15 @@
-﻿using System;
+﻿using CleanArchitecture.Application.ViewModels;
+using CleanArchitecture.Domain.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Intarfaces
 {
     public interface IForumService
     {
+        IEnumerable<ForumListViewModel> GetAll();
+        Forum GetById(int forumId);
+
+        IEnumerable<ApplicationUser> GetAllActiveUsers(int forumId);
+        bool HasRecentPost(int forumId);
     }
 }

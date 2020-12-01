@@ -1,0 +1,54 @@
+﻿@using CleanArchitecture.Application.ViewModels
+@using CleanArchitecture.Domain.Model
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Forum";
+}
+
+<div class="row">
+    <div class="col-6">
+        <h2>Forum List</h2>
+    </div>
+</div>
+<br />
+<table class="table table-bordered table-hover">
+
+    <tbody>
+        @foreach (var forum in Model.ForumList)
+        {
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-1 text-center"><img src="/img/Default-Avatar.png" style="width: 40px" /></div>
+                        <div class="col-10 ">
+                            <a style="font-size: 1.5em" asp-controller="Forum" asp-action="Details" asp-route-id="@forum.Id">
+                                @forum.Title
+                            </a>
+
+                            @if (forum.HasRecentPost)
+                            {
+                                <div class="badge badge-success">New</div>
+                            }
+                            <br />
+
+                            @forum.Description
+                            <div class="text-muted">
+                                @forum.NumberOfPosts Posts by
+                                @forum.NumberOfUsers Users
+                            </div>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <br />
+                                <a class="btn btn-danger btn-sm" asp-controller="Forum" asp-action="Delete" asp-route-id="@forum.Id">Delete</a>
+                            }
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
