@@ -18,9 +18,9 @@ namespace CleanArchitecture.Application.Services
             _uow = uow;
         }
 
-        public IEnumerable<ForumListViewModel> GetAll()
+        public IEnumerable<ForumViewModel> GetAll()
         {
-            var modelDb = _uow.ForumRepository.GetAll(includeProperties: "Posts").Select(f => new ForumListViewModel
+            var modelDb = _uow.ForumRepository.GetAll(includeProperties: "Posts").Select(f => new ForumViewModel
             {
                 Id = f.Id,
                 Title = f.Title,
@@ -65,7 +65,7 @@ namespace CleanArchitecture.Application.Services
             return modelDb;
         }
 
-        public async Task Save(ForumAddViewModel model)
+        public async Task Save(ForumViewModel model)
         {
             if (model.Id == 0)
                 await Create(model: model);
@@ -73,7 +73,7 @@ namespace CleanArchitecture.Application.Services
                 await Update(model: model);
         }
 
-        private async Task Create(ForumAddViewModel model)
+        private async Task Create(ForumViewModel model)
         {
             var modelDb = new Forum()
             {
@@ -93,7 +93,7 @@ namespace CleanArchitecture.Application.Services
             }
         }
 
-        private async Task Update(ForumAddViewModel model)
+        private async Task Update(ForumViewModel model)
         {
             var modelDb = GetById(model.Id);
             modelDb.Title = model.Title;

@@ -22,7 +22,7 @@ namespace CleanArchitecture.MVC.Controllers
 
         public IActionResult Index()
         {
-            var model = new ForumViewModel
+            var model = new ForumListModel
             {
                 ForumList = _forumService.GetAll()
             };
@@ -32,14 +32,14 @@ namespace CleanArchitecture.MVC.Controllers
         [Authorize(Roles = AppConst.Role.AdminRole)]
         public IActionResult Create()
         {
-            var model = new ForumAddViewModel();
+            var model = new ForumViewModel();
             return View(model);
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddForum(ForumAddViewModel model)
+        public async Task<IActionResult> AddForum(ForumViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -54,7 +54,7 @@ namespace CleanArchitecture.MVC.Controllers
         public IActionResult Edit(int id)
         {
             var modelDb = _forumService.GetById(forumId: id);
-            var model = new ForumAddViewModel()
+            var model = new ForumViewModel()
             {
                Id = modelDb.Id,
                Title = modelDb.Title,
@@ -66,7 +66,7 @@ namespace CleanArchitecture.MVC.Controllers
         [Authorize(Roles = AppConst.Role.AdminRole)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ForumAddViewModel model)
+        public async Task<IActionResult> Edit(ForumViewModel model)
         {
             if (ModelState.IsValid)
             {

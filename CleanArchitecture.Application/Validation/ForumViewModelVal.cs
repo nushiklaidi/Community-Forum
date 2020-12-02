@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Validation
 {
-    public class ForumViewModelVal : AbstractValidator<ForumAddViewModel>
+    public class ForumViewModelVal : AbstractValidator<ForumViewModel>
     {
         public ForumViewModelVal()
         {

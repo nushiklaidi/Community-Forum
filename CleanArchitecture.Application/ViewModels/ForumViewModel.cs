@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.Application.ViewModels
+﻿namespace CleanArchitecture.Application.ViewModels
 {
     public class ForumViewModel
     {
-        public IEnumerable<ForumListViewModel> ForumList { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public int NumberOfPosts { get; set; }
+        public int NumberOfUsers { get; set; }
+        public bool HasRecentPost { get; set; }
     }
 }
