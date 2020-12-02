@@ -22,8 +22,12 @@
     </div>
 </div>
 <br />
-<table class="table table-bordered table-hover">
-
+<table class="table table-bordered table-hover" id="tableResult">
+    <thead>
+        <tr>
+            <th>Results</th>
+        </tr>
+    </thead>
     <tbody>
         @foreach (var forum in Model.ForumList)
         {
@@ -56,3 +60,8 @@
         }
     </tbody>
 </table>
+
+@section scripts{
+    <script src="~/js/Forum.js"></script>
+}
+

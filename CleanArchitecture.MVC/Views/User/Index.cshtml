@@ -13,7 +13,7 @@
 <div>
     @if (Model.Users.Any())
     {
-        <table class="table">
+        <table class="table table-bordered" id="tableResult">
             <thead class="thead-dark">
                 <tr>
                     <th>User Name</th>
@@ -54,3 +54,7 @@
         <p>No Users</p>
     }
 </div>
+
+@section scripts{
+    <script src="~/js/User.js"></script>
+}
