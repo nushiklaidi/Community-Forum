@@ -9,6 +9,7 @@ namespace CleanArchitecture.Application.ViewModels
 {
     public class ForumAddViewModel
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
     }

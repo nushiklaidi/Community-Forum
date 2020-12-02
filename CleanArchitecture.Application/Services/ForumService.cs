@@ -65,7 +65,15 @@ namespace CleanArchitecture.Application.Services
             return modelDb;
         }
 
-        public async Task Create(ForumAddViewModel model)
+        public async Task Save(ForumAddViewModel model)
+        {
+            if (model.Id == 0)
+                await Create(model: model);
+            else
+                await Update(model: model);
+        }
+
+        private async Task Create(ForumAddViewModel model)
         {
             var modelDb = new Forum()
             {
@@ -82,6 +90,24 @@ namespace CleanArchitecture.Application.Services
             {
 
                 throw new ApplicationException("Creation failed");
+            }
+        }
+
+        private async Task Update(ForumAddViewModel model)
+        {
+            var modelDb = GetById(model.Id);
+            modelDb.Title = model.Title;
+            modelDb.Description = model.Description;
+
+            await _uow.ForumRepository.Update(modelDb);
+            try
+            {
+                await _uow.SavechangesAsync();
+            }
+            catch (Exception)
+            {
+
+                throw new ApplicationException("Update failed");
             }
         }
     }

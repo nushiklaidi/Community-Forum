@@ -9,7 +9,7 @@ namespace CleanArchitecture.Application.Intarfaces
     {
         IEnumerable<ForumListViewModel> GetAll();
         Forum GetById(int forumId);
-        Task Create(ForumAddViewModel model);
+        Task Save(ForumAddViewModel model);
 
         IEnumerable<ApplicationUser> GetAllActiveUsers(int forumId);
         bool HasRecentPost(int forumId);
