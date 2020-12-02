@@ -1,0 +1,31 @@
+﻿@model CleanArchitecture.Application.ViewModels.ForumAddViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Create</h4>
+<hr />
+<form method="post" asp-controller="Forum" asp-action="AddForum">
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <img src="/img/DefaultForum.png" width="70%" />
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Title">Forum Title</label>
+                <input asp-for="Title" class="form-control" placeholder="Add forum title" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description">Forum Description</label>
+                <input asp-for="Description" class="form-control" placeholder="Add forum description" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Create</button>
+                <a asp-controller="Forum" asp-action="Index" class="btn btn-warning" style="width:auto">Back to Forum</a>
+            </div>
+        </div>
+    </div>    
+</form>

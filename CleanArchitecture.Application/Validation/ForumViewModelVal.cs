@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Validation
 {
-    public class UserViewModelVal : AbstractValidator<UserViewModel>
+    public class ForumViewModelVal : AbstractValidator<ForumAddViewModel>
     {
-        public UserViewModelVal()
+        public ForumViewModelVal()
         {
-            RuleFor(r => r.UserName)
+            RuleFor(r => r.Title)
                 .NotEmpty()
-                .NotNull();            
+                .NotNull();
+            RuleFor(r => r.Description)
+                .NotEmpty()
+                .NotNull();
         }
     }
 }

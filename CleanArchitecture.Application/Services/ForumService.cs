@@ -5,6 +5,7 @@ using CleanArchitecture.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Services
 {
@@ -26,7 +27,6 @@ namespace CleanArchitecture.Application.Services
                 Description = f.Description,
                 NumberOfPosts = f.Posts?.Count() ?? 0,
                 NumberOfUsers = GetAllActiveUsers(f.Id).Count(),
-                ForumImageUrl = f.ImageUrl,
                 HasRecentPost = HasRecentPost(f.Id)
             }).OrderBy(f => f.Title);
             return modelDb;
@@ -63,6 +63,26 @@ namespace CleanArchitecture.Application.Services
             var window = DateTime.Now.AddHours(-hoursAgo);
             var modelDb = GetById(forumId).Posts.Any(p => p.Created > window);
             return modelDb;
+        }
+
+        public async Task Create(ForumAddViewModel model)
+        {
+            var modelDb = new Forum()
+            {
+                Title = model.Title,
+                Description = model.Description,
+                Created = DateTime.Now
+            };
+            await _uow.ForumRepository.Insert(modelDb);
+            try
+            {                
+                await _uow.SavechangesAsync();
+            }
+            catch (Exception)
+            {
+
+                throw new ApplicationException("Creation failed");
+            }
         }
     }
 }

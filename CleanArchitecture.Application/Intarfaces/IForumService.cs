@@ -1,6 +1,7 @@
 ﻿using CleanArchitecture.Application.ViewModels;
 using CleanArchitecture.Domain.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Intarfaces
 {
@@ -8,6 +9,7 @@ namespace CleanArchitecture.Application.Intarfaces
     {
         IEnumerable<ForumListViewModel> GetAll();
         Forum GetById(int forumId);
+        Task Create(ForumAddViewModel model);
 
         IEnumerable<ApplicationUser> GetAllActiveUsers(int forumId);
         bool HasRecentPost(int forumId);

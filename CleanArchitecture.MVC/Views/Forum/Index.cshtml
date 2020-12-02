@@ -1,6 +1,6 @@
-﻿@using CleanArchitecture.Application.ViewModels
-@using CleanArchitecture.Domain.Model
+﻿@using CleanArchitecture.Domain.Model
 @using Microsoft.AspNetCore.Identity
+@model CleanArchitecture.Application.ViewModels.ForumViewModel
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -10,7 +10,15 @@
 
 <div class="row">
     <div class="col-6">
-        <h2>Forum List</h2>
+        <h4>Forum List</h4>
+    </div>
+    <div class="col-6">
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn btn-outline-success float-right" asp-action="Create">Create new Forum</a>
+            <br />
+            <br />
+        }
     </div>
 </div>
 <br />
@@ -22,18 +30,14 @@
             <tr>
                 <td>
                     <div class="row">
-                        <div class="col-1 text-center"><img src="/img/Default-Avatar.png" style="width: 40px" /></div>
-                        <div class="col-10 ">
-                            <a style="font-size: 1.5em" asp-controller="Forum" asp-action="Details" asp-route-id="@forum.Id">
-                                @forum.Title
-                            </a>
-
+                        <div class="col-2 text-center"><img src="/img/DefaultForum.png" style="width: 40px" /></div>
+                        <div class="col-9 ">
+                            <a style="font-size: 1.5em" asp-controller="Forum" asp-action="Details" asp-route-id="@forum.Id">@forum.Title</a>
                             @if (forum.HasRecentPost)
                             {
                                 <div class="badge badge-success">New</div>
                             }
                             <br />
-
                             @forum.Description
                             <div class="text-muted">
                                 @forum.NumberOfPosts Posts by
@@ -42,7 +46,7 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 <br />
-                                <a class="btn btn-danger btn-sm" asp-controller="Forum" asp-action="Delete" asp-route-id="@forum.Id">Delete</a>
+                                <a class="btn btn-outline-danger btn-sm" asp-controller="Forum" asp-action="Delete" asp-route-id="@forum.Id">Delete</a>
                             }
                         </div>
                     </div>
@@ -51,4 +55,3 @@
         }
     </tbody>
 </table>
-

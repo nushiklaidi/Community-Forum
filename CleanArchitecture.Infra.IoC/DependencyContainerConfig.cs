@@ -1,5 +1,4 @@
-﻿using CleanArchitecture.Application.AppOptions;
-using CleanArchitecture.Application.Intarfaces;
+﻿using CleanArchitecture.Application.Intarfaces;
 using CleanArchitecture.Application.Services;
 using CleanArchitecture.Application.Validation;
 using CleanArchitecture.Application.ViewModels;
@@ -33,6 +32,7 @@ namespace CleanArchitecture.Infra.IoC
             //Validator
             services.AddTransient<IValidator<AuthViewModel>, AuthViewModelVal>();
             services.AddTransient<IValidator<UserViewModel>, UserViewModelVal>();
+            services.AddTransient<IValidator<ForumAddViewModel>, ForumViewModelVal>();
         }
     }
 }

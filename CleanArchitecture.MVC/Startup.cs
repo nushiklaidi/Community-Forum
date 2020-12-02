@@ -3,6 +3,7 @@ using CleanArchitecture.Application.AppOptions;
 using CleanArchitecture.Domain.Model;
 using CleanArchitecture.Infra.Data.Context;
 using CleanArchitecture.Infra.IoC;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -68,13 +69,18 @@ namespace CleanArchitecture.MVC
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddMvc().AddNToastNotifyNoty(new NotyOptions
-            {
-                Layout = "bottomRight",
-                ProgressBar = true,
-                Timeout = 5000,
-                Theme = "metroui"
-            });
+            services.AddMvc()
+                .AddFluentValidation(v =>
+                {
+                    v.RegisterValidatorsFromAssemblyContaining<Startup>();
+                })
+                .AddNToastNotifyNoty(new NotyOptions
+                {
+                    Layout = "bottomRight",
+                    ProgressBar = true,
+                    Timeout = 5000,
+                    Theme = "metroui"
+                });
 
             services.Configure<EmailOptions>(Configuration);
 
