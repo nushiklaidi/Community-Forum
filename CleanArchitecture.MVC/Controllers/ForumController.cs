@@ -4,6 +4,7 @@ using CleanArchitecture.Application.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.MVC.Controllers
@@ -37,28 +38,16 @@ namespace CleanArchitecture.MVC.Controllers
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddForum(ForumViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                await _forumService.Save(model: model);
-                _toastNotification.AddSuccessToastMessage("The forum has been created");
-                return RedirectToAction(nameof(Index));
-            }
-            return View(nameof(Create), model);
-        }
-
-        [Authorize(Roles = AppConst.Role.AdminRole)]
         public IActionResult Edit(int id)
         {
             var modelDb = _forumService.GetById(forumId: id);
             var model = new ForumViewModel()
             {
-               Id = modelDb.Id,
-               Title = modelDb.Title,
-               Description = modelDb.Description
+                Id = modelDb.Id,
+                Title = modelDb.Title,
+                Description = modelDb.Description,
+                NumberOfPosts = modelDb.Posts?.Count() ?? 0,
+                NumberOfUsers = _forumService.GetAllActiveUsers(forumId: id).Count()
             };
             return View(model);
         }
@@ -66,12 +55,15 @@ namespace CleanArchitecture.MVC.Controllers
         [Authorize(Roles = AppConst.Role.AdminRole)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ForumViewModel model)
+        public async Task<IActionResult> AddOrEdit(ForumViewModel model)
         {
             if (ModelState.IsValid)
             {
                 await _forumService.Save(model: model);
-                _toastNotification.AddSuccessToastMessage("The forum has been updated");
+                if (model.Id == 0)
+                    _toastNotification.AddSuccessToastMessage("The forum has been created");
+                else
+                    _toastNotification.AddSuccessToastMessage("The forum has been updated");
                 return RedirectToAction(nameof(Index));
             }
             return View(nameof(Edit), model);

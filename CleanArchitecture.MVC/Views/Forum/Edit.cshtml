@@ -3,10 +3,15 @@
 
 <h4>Edit forum</h4>
 <hr />
-<form method="post" asp-controller="Forum" asp-action="Edit">
-    <div class="row">
+<form method="post" asp-controller="Forum" asp-action="AddOrEdit">
+    <div class="row border">
         <div class="col-md-4 text-center">
-            <img src="/img/DefaultForum.png" width="70%" />
+            <img src="/img/DefaultForum.png" width="55%" />
+            <br />
+            <div class="text-muted">
+                @Model.NumberOfPosts Posts By
+                @Model.NumberOfUsers Users
+            </div>
         </div>
         <div class="col-md-6">
             <input asp-for="Id" hidden />
