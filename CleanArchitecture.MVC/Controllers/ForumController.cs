@@ -31,25 +31,26 @@ namespace CleanArchitecture.MVC.Controllers
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]
-        public IActionResult Create()
-        {
-            var model = new ForumViewModel();
-            return View(model);
-        }
-
-        [Authorize(Roles = AppConst.Role.AdminRole)]
         public IActionResult Edit(int id)
         {
-            var modelDb = _forumService.GetById(forumId: id);
-            var model = new ForumViewModel()
+            if (id == 0)
             {
-                Id = modelDb.Id,
-                Title = modelDb.Title,
-                Description = modelDb.Description,
-                NumberOfPosts = modelDb.Posts?.Count() ?? 0,
-                NumberOfUsers = _forumService.GetAllActiveUsers(forumId: id).Count()
-            };
-            return View(model);
+                var model = new ForumViewModel();
+                return View(model);
+            }
+            else
+            {
+                var modelDb = _forumService.GetById(forumId: id);
+                var model = new ForumViewModel()
+                {
+                    Id = modelDb.Id,
+                    Title = modelDb.Title,
+                    Description = modelDb.Description,
+                    NumberOfPosts = modelDb.Posts?.Count() ?? 0,
+                    NumberOfUsers = _forumService.GetAllActiveUsers(forumId: id).Count()
+                };
+                return View(model);
+            }
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]
