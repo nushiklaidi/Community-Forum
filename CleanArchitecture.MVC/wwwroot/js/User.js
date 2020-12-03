@@ -40,6 +40,13 @@ function Users() {
             data: { id: user.id },
             success: function (data) {
                 self.getUsers();
+            },
+            error: function (xhr) {
+                swal({
+                    title: xhr.responseText,
+                    icon: "error",
+                    button: "Ok"
+                });
             }
         });
     };
@@ -51,6 +58,13 @@ function Users() {
             data: { id: user.id },
             success: function (data) {
                 self.getUsers();
+            },
+            error: function (xhr) {
+                swal({
+                    title: xhr.responseText,
+                    icon: "error",
+                    button: "Ok"
+                });
             }
         });
     };

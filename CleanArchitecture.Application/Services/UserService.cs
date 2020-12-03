@@ -119,9 +119,9 @@ namespace CleanArchitecture.Application.Services
             {
                 await _uow.SavechangesAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new ApplicationException("Update failed");
+                throw new ApplicationException("Update failed", ex);
             }                      
         }
 
@@ -137,9 +137,9 @@ namespace CleanArchitecture.Application.Services
             {
                 await _uow.SavechangesAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new ApplicationException("Update failed");
+                throw new ApplicationException("Update failed", ex);
             }           
         }
 
@@ -155,9 +155,9 @@ namespace CleanArchitecture.Application.Services
             {
                 await _uow.SavechangesAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new ApplicationException("Update failed");
+                throw new ApplicationException("Update failed", ex);
             }
         }        
     }

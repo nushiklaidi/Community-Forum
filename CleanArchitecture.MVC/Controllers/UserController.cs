@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using System;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.MVC.Controllers
@@ -69,19 +70,37 @@ namespace CleanArchitecture.MVC.Controllers
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]
+        [HttpPost]
         public async Task<IActionResult> ActivateUser(string id)
         {
-            await _userService.ActivateUser(id);
-            _toastNotification.AddSuccessToastMessage("The user has been activated");
-            return new StatusCodeResult(200);
+            try
+            {
+                await _userService.ActivateUser(id);
+                _toastNotification.AddSuccessToastMessage("The user has been activated");
+                return StatusCode(200);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(400, ex.Message);
+            }            
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]
+        [HttpPost]
         public async Task<IActionResult> DeactivateUser(string id)
         {
-            await _userService.DeactivateUser(id);
-            _toastNotification.AddSuccessToastMessage("The user has been deactivated");
-            return new StatusCodeResult(200);
+            try
+            {
+                await _userService.DeactivateUser(id);
+                _toastNotification.AddSuccessToastMessage("The user has been deactivated");
+                return StatusCode(200);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(400, ex.Message);
+            }
         }
     }
 }
