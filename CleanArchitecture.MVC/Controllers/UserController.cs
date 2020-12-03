@@ -34,6 +34,16 @@ namespace CleanArchitecture.MVC.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = AppConst.Role.AdminRole)]
+        public async Task<IActionResult> GetUsers()
+        {
+            var model = new UserListViewModel
+            {
+                Users = await _userService.GetAll()
+            };
+            return PartialView("_UsersTable", model);
+        }
+
         public async Task<IActionResult> Edit(string id)
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -59,11 +69,11 @@ namespace CleanArchitecture.MVC.Controllers
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]
-        public async Task<IActionResult> AcivateUser(string id)
+        public async Task<IActionResult> ActivateUser(string id)
         {
             await _userService.ActivateUser(id);
             _toastNotification.AddSuccessToastMessage("The user has been activated");
-            return RedirectToAction(nameof(Index));
+            return new StatusCodeResult(200);
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]
@@ -71,7 +81,7 @@ namespace CleanArchitecture.MVC.Controllers
         {
             await _userService.DeactivateUser(id);
             _toastNotification.AddSuccessToastMessage("The user has been deactivated");
-            return RedirectToAction(nameof(Index));
+            return new StatusCodeResult(200);
         }
     }
 }
