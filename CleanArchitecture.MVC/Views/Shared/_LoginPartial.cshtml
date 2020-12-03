@@ -5,7 +5,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul class="navbar-nav navbar-nav flex-grow-1">
+<ul class="navbar-nav navbar-nav flex-grow-1 justify-content-end">
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
