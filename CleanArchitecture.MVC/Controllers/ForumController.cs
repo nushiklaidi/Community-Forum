@@ -4,6 +4,7 @@ using CleanArchitecture.Application.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -40,6 +41,7 @@ namespace CleanArchitecture.MVC.Controllers
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             if (id == 0)
@@ -78,5 +80,23 @@ namespace CleanArchitecture.MVC.Controllers
             }
             return View(nameof(Edit), model);
         }
+
+        [Authorize(Roles = AppConst.Role.AdminRole)]
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _forumService.Delete(forumId: id);
+                _toastNotification.AddSuccessToastMessage("The forum has been deleted");
+                return StatusCode(200);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(400, ex.Message);
+            }
+        }
+
     }
 }

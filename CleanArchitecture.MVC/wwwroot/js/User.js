@@ -35,7 +35,7 @@ function Users() {
 
     this.deActivate = function ($user, user) {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/User/DeactivateUser",
             data: { id: user.id },
             success: function (data) {
@@ -46,7 +46,7 @@ function Users() {
 
     this.activate = function ($user, user) {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/User/ActivateUser",
             data: { id: user.id },
             success: function (data) {

@@ -15,6 +15,34 @@ function Forums() {
 
     this.initializeEvents = function () {
         let $Results = $('#tableResult');
+
+        $Results.on('click', '.delete', function (e) {
+            e.preventDefault();
+            let $forum = $(this);
+            let forum = {
+                id: $forum.data('id')
+            };
+
+            self.delete($forum, forum);
+        });
+    };
+
+    this.delete = function ($forum, forum) {
+        $.ajax({
+            type: "POST",
+            url: "/Forum/Delete",
+            data: { id: forum.id },
+            success: function (data) {
+                self.getForums();
+            },
+            error: function (xhr) {
+                swal({
+                    title: xhr.responseText,
+                    icon: "error",
+                    button: "Ok"
+                });
+            }
+        });
     };
 
     this.getForums = function () {

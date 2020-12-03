@@ -73,6 +73,21 @@ namespace CleanArchitecture.Application.Services
                 await Update(model: model);
         }
 
+        public async Task Delete(int forumId)
+        {
+            var modelDb = GetById(forumId);
+            await _uow.ForumRepository.Delete(modelDb);
+            try
+            {
+                await _uow.SavechangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException("Deleted failed", ex);
+            }
+        }
+
         private async Task Create(ForumViewModel model)
         {
             var modelDb = new Forum()
@@ -86,10 +101,10 @@ namespace CleanArchitecture.Application.Services
             {                
                 await _uow.SavechangesAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw new ApplicationException("Creation failed");
+                throw new ApplicationException("Creation failed", ex);
             }
         }
 
@@ -104,10 +119,10 @@ namespace CleanArchitecture.Application.Services
             {
                 await _uow.SavechangesAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw new ApplicationException("Update failed");
+                throw new ApplicationException("Update failed", ex);
             }
         }
     }
