@@ -15,51 +15,15 @@
     <div class="col-6">
         @if (User.IsInRole("Admin"))
         {
-            <a class="btn btn-outline-success float-right" asp-action="Edit">Create new Forum</a>
-            <br />
-            <br />
+            <a class="btn btn-outline-success float-right" asp-action="Edit">Create new Forum</a>            
         }
     </div>
 </div>
 <br />
-<table class="table table-bordered table-hover" id="tableResult">
-    <thead>
-        <tr>
-            <th>Results</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var forum in Model.ForumList)
-        {
-            <tr>
-                <td>
-                    <div class="row">
-                        <div class="col-2 text-center"><img src="/img/DefaultForum.png" style="width: 40px" /></div>
-                        <div class="col-9 ">
-                            <a style="font-size: 1.5em" asp-controller="Forum" asp-action="Details" asp-route-id="@forum.Id">@forum.Title</a>
-                            @if (forum.HasRecentPost)
-                            {
-                                <div class="badge badge-success">New</div>
-                            }
-                            <br />
-                            @forum.Description
-                            <div class="text-muted">
-                                @forum.NumberOfPosts Posts by
-                                @forum.NumberOfUsers Users
-                            </div>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <br />
-                                <a class="btn btn-outline-danger btn-sm" asp-controller="Forum" asp-action="Delete" asp-route-id="@forum.Id">Delete</a>
-                                <a class="btn btn-outline-success btn-sm" asp-controller="Forum" asp-action="Edit" asp-route-id="@forum.Id">Edit</a>
-                            }
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="card-body">
+    @Html.Partial("_ForumsTable", Model)
+</div>
+
 
 @section scripts{
     <script src="~/js/Forum.js"></script>

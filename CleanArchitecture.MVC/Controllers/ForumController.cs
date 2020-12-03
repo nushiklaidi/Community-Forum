@@ -30,6 +30,15 @@ namespace CleanArchitecture.MVC.Controllers
             return View(model);
         }
 
+        public IActionResult GetForums()
+        {
+            var model = new ForumListModel
+            {
+                ForumList = _forumService.GetAll()
+            };
+            return PartialView("_ForumsTable", model);
+        }
+
         [Authorize(Roles = AppConst.Role.AdminRole)]
         public IActionResult Edit(int id)
         {
