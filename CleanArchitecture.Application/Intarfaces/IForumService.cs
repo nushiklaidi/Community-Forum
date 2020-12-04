@@ -11,6 +11,8 @@ namespace CleanArchitecture.Application.Intarfaces
         Forum GetById(int forumId);
         Task Save(ForumViewModel model);
         Task Delete(int forumId);
+        ForumViewModel BuildForum(Post model);
+        ForumViewModel BuildForum(Forum model);
 
         IEnumerable<ApplicationUser> GetAllActiveUsers(int forumId);
         bool HasRecentPost(int forumId);

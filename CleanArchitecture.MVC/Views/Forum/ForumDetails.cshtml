@@ -1,0 +1,32 @@
+﻿@model CleanArchitecture.Application.ViewModels.ForumDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col-6">
+        <h4>@Model.Forum.Title</h4>
+    </div>
+    <div class="col-6">
+        <a class="btn btn-outline-success float-right" asp-controller="Post" asp-action="Create">Create new Post</a>
+    </div>
+</div>
+<br />
+@if (Model.Posts.Any())
+{
+    <div class="card-body">
+        @Html.Partial("_ForumDetailsTable", Model)
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h4>There are no posts in this forum</h4>
+    </div>
+}
+
+@section scripts{
+    <script src="~/sweetalert/sweetalert.min.js"></script>
+    <script src="~/js/ForumDetails.js"></script>
+}

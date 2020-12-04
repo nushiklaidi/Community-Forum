@@ -12,5 +12,6 @@ namespace CleanArchitecture.Domain.Interfaces
 
         IUserRepository UserRepository { get; }
         IForumRepository ForumRepository { get; }
+        IPostRepository PostRepository { get; }
     }
 }

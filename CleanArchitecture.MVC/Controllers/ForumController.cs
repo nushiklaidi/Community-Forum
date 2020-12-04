@@ -1,10 +1,12 @@
 ﻿using CleanArchitecture.Application.Intarfaces;
 using CleanArchitecture.Application.Model;
 using CleanArchitecture.Application.ViewModels;
+using CleanArchitecture.Domain.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,12 +16,14 @@ namespace CleanArchitecture.MVC.Controllers
     public class ForumController : Controller
     {
         private readonly IForumService _forumService;
+        private readonly IPostService _postService;
         private readonly IToastNotification _toastNotification;
 
-        public ForumController(IForumService forumService, IToastNotification toastNotification)
+        public ForumController(IForumService forumService, IToastNotification toastNotification, IPostService postService)
         {
             _forumService = forumService;
             _toastNotification = toastNotification;
+            _postService = postService;
         }
 
         public IActionResult Index()
@@ -38,6 +42,28 @@ namespace CleanArchitecture.MVC.Controllers
                 ForumList = _forumService.GetAll()
             };
             return PartialView("_ForumsTable", model);
+        }
+
+        public IActionResult ForumDetails(int id)
+        {
+            var forum = _forumService.GetById(forumId: id);
+            var model = new ForumDetailsViewModel
+            {
+                Posts = _postService.GetPostsByForum(model: forum),
+                Forum = _forumService.BuildForum(model: forum)
+            };
+            return View(model);
+        }
+
+        public IActionResult GetForumDetails(int id)
+        {
+            var forum = _forumService.GetById(forumId: id);
+            var model = new ForumDetailsViewModel
+            {
+                Posts = _postService.GetPostsByForum(model: forum),
+                Forum = _forumService.BuildForum(model: forum)
+            };
+            return PartialView("_ForumDetailsTable", model);
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]

@@ -125,5 +125,22 @@ namespace CleanArchitecture.Application.Services
                 throw new ApplicationException("Update failed", ex);
             }
         }
+
+        public ForumViewModel BuildForum(Post model)
+        {
+            var forum = model.Forum;
+            return BuildForum(forum);
+        }
+
+        public ForumViewModel BuildForum(Forum model)
+        {
+            var modelVm = new ForumViewModel()
+            {
+                Id = model.Id,
+                Title = model.Title,
+                Description = model.Description
+            };
+            return modelVm;
+        }
     }
 }

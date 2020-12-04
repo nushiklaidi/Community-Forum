@@ -13,6 +13,7 @@ namespace CleanArchitecture.Infra.Data.Repositories
 
         public IUserRepository _userRepository { get; private set; }
         public IForumRepository _forumRepository { get; private set; }
+        public IPostRepository _postRepository { get; private set; }
         
         public UnitOfWork(AppDbContext appDbContext)
         {
@@ -31,5 +32,6 @@ namespace CleanArchitecture.Infra.Data.Repositories
 
         public IUserRepository UserRepository => _userRepository = _userRepository ?? new UserRepository(_appDbContext);
         public IForumRepository ForumRepository => _forumRepository = _forumRepository ?? new ForumRepository(_appDbContext);
+        public IPostRepository PostRepository => _postRepository = _postRepository ?? new PostRepository(_appDbContext);
     }
 }
