@@ -16,7 +16,7 @@
                             <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">@post.Title</a>
                         </div>
                         <div>
-                            by <a class="badge badge-dark" asp-controller="Profile" asp-action="Details" asp-route-id="@post.AuthorId">@post.AuthorName</a>
+                            by <a class="badge badge-dark" asp-controller="User" asp-action="Edit" asp-route-id="@post.AuthorId">@post.AuthorName</a>
                             <span style="font-size: 0.8em">(@post.AuthorRating)</span>
                         </div>
                         <div>Posted on: @post.DatePosted</div>
