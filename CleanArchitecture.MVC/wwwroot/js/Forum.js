@@ -53,7 +53,7 @@ function Forums() {
             dataType: "html",
             url: "/Forum/GetForums",
             success: function (data) {
-                $('.card-body').html(data);
+                $('.cbody').html(data);
                 self.initializeDataTable();
                 self.initializeEvents();
             }

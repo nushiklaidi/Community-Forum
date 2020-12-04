@@ -30,13 +30,17 @@
                                 {
                                     <div>@post.RepliesCount replies</div>
                                 }
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <div>
-                                        <br />
+                                <div>
+                                    <br />
+                                    @if (User.IsInRole("Admin"))
+                                    {
                                         <button class="btn btn-outline-danger btn-sm delete" data-id="@post.Id" data-forumid="@Model.Forum.Id">Delete</button>
-                                    </div>
-                                }
+                                    }
+                                    @if (post.AuthorName == User.Identity.Name || User.IsInRole("Admin"))
+                                    {
+                                        <button class="btn btn-outline-success btn-sm">Edit</button>
+                                    }
+                                </div>
                             </div>
                             <div class="col-6">
                                 <p class="card-text"> @post.Content</p>

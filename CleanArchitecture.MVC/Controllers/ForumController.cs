@@ -44,6 +44,7 @@ namespace CleanArchitecture.MVC.Controllers
             return PartialView("_ForumsTable", model);
         }
 
+        [HttpGet]
         public IActionResult ForumDetails(int id)
         {
             var forum = _forumService.GetById(forumId: id);
@@ -95,16 +96,12 @@ namespace CleanArchitecture.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit(ForumViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                await _forumService.Save(model: model);
-                if (model.Id == 0)
-                    _toastNotification.AddSuccessToastMessage("The forum has been created");
-                else
-                    _toastNotification.AddSuccessToastMessage("The forum has been updated");
-                return RedirectToAction(nameof(Index));
-            }
-            return View(nameof(Edit), model);
+            await _forumService.Save(model: model);
+            if (model.Id == 0)
+                _toastNotification.AddSuccessToastMessage("The forum has been created");
+            else
+                _toastNotification.AddSuccessToastMessage("The forum has been updated");
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]

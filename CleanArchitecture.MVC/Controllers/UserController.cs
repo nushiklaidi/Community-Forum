@@ -60,13 +60,9 @@ namespace CleanArchitecture.MVC.Controllers
         [ValidateAntiForgeryToken]        
         public async Task<IActionResult> Edit(UserViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                await _userService.Update(model);
-                _toastNotification.AddSuccessToastMessage("The user has been updated");
-                return RedirectToAction("Index", "Home");
-            }
-            return View(nameof(Edit), model);
+            await _userService.Update(model);
+            _toastNotification.AddSuccessToastMessage("The user has been updated");
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]

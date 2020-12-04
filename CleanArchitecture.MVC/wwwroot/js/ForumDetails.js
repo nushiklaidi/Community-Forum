@@ -54,7 +54,7 @@ function ForumDetails() {
             url: "/Forum/GetForumDetails",
             data: { id: post.forumId },
             success: function (data) {
-                $('.card-body').html(data);
+                $('.cbody').html(data);
                 self.initializeDataTable();
                 self.initializeEvents();
             }

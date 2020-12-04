@@ -77,7 +77,7 @@ function Users() {
             dataType: "html",
             url: "/User/GetUsers",
             success: function (data) {
-                $('.card-body').html(data);
+                $('.cbody').html(data);
                 self.initializeDataTable();
                 self.initializeEvents();
             }
