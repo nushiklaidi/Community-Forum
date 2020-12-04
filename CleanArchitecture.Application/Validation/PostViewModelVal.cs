@@ -10,6 +10,9 @@ namespace CleanArchitecture.Application.Validation
             RuleFor(r => r.Title)
                 .NotEmpty()
                 .NotNull();
+            RuleFor(r => r.Content)
+                .NotEmpty()
+                .NotNull();
         }
     }
 }

@@ -12,33 +12,36 @@
             <tr>
                 <td>
                     <div>
-                        <div style="font-size: 1.5em">
-                            <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">@post.Title</a>
-                        </div>
-                        <div>
-                            by <a class="badge badge-dark" asp-controller="User" asp-action="Edit" asp-route-id="@post.AuthorId">@post.AuthorName</a>
-                            <span style="font-size: 0.8em">(@post.AuthorRating)</span>
-                        </div>
-                        <div>Posted on: @post.DatePosted</div>
-                        @if (post.RepliesCount == 0)
-                        {
-                            <div>No replies</div>
-                        }
-                        @if (post.RepliesCount == 1)
-                        {
-                            <div>1 reply</div>
-                        }
-                        @if (post.RepliesCount > 1)
-                        {
-                            <div>@post.RepliesCount replies</div>
-                        }
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <div>
-                                <br />
-                                <button class="btn btn-outline-danger btn-sm delete" data-id="@post.Id" data-forumid="@Model.Forum.Id">Delete</button>
+                        <div class="row">
+                            <div class="col-4">
+                                <div style="font-size: 1.5em">
+                                    <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">@post.Title</a>
+                                </div>
+                                <div>
+                                    by <a class="badge badge-dark" asp-controller="User" asp-action="Edit" asp-route-id="@post.AuthorId">@post.AuthorName</a>
+                                    <span style="font-size: 0.8em">(@post.AuthorRating)</span>
+                                </div>
+                                <div>Posted on: @post.DatePosted</div>
+                                @if (post.RepliesCount == 0)
+                                {
+                                    <div>No replies</div>
+                                }
+                                @if (post.RepliesCount >= 1)
+                                {
+                                    <div>@post.RepliesCount replies</div>
+                                }
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <div>
+                                        <br />
+                                        <button class="btn btn-outline-danger btn-sm delete" data-id="@post.Id" data-forumid="@Model.Forum.Id">Delete</button>
+                                    </div>
+                                }
                             </div>
-                        }
+                            <div class="col-6">
+                                <p class="card-text"> @post.Content</p>
+                            </div>
+                        </div>                        
                     </div>
                 </td>
             </tr>

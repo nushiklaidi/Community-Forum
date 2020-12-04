@@ -38,6 +38,7 @@ namespace CleanArchitecture.Application.Services
                 AuthorId = p.ApplicationUser.Id.ToString(),
                 AuthorRating = p.ApplicationUser.Rating,
                 Title = p.Title,
+                Content = p.Content,
                 DatePosted = p.Created.ToString(),
                 RepliesCount = p.PostReplies.Count(),
                 AuthorName = p.ApplicationUser.UserName,
