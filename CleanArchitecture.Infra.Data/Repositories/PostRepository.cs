@@ -4,8 +4,8 @@ using CleanArchitecture.Infra.Data.Context;
 
 namespace CleanArchitecture.Infra.Data.Repositories
 {
-    public class ForumRepository : GenericRepository<Forum>, IForumRepository
+    public class PostRepository : GenericRepository<Post>, IPostRepository
     {
-        public ForumRepository(AppDbContext context) : base(context) { }
+        public PostRepository(AppDbContext context) : base(context) { }
     }
 }

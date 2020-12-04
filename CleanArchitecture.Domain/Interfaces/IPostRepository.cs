@@ -2,7 +2,7 @@
 
 namespace CleanArchitecture.Domain.Interfaces
 {
-    public interface IForumRepository : IGenericRepository<Forum>
+    public interface IPostRepository : IGenericRepository<Post>
     {
     }
 }

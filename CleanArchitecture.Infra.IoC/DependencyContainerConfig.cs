@@ -18,6 +18,7 @@ namespace CleanArchitecture.Infra.IoC
             //CleanArchitecture.Application
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IForumService, ForumService>();
+            services.AddScoped<IPostService, PostService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEmailSender, EmailSender>();
 
@@ -25,6 +26,7 @@ namespace CleanArchitecture.Infra.IoC
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IForumRepository, ForumRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
 
             //CleanArchitecture.Domain.Interfaces | CleanArchitecture.Infra.Data.Repositories
             services.AddScoped<IUnitOfWork, UnitOfWork>();
