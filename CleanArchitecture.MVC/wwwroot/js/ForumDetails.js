@@ -69,6 +69,5 @@ function ForumDetails() {
 
 $(document).ready(function () {
     forumDetails = new ForumDetails();
-    forumDetails.initializeDataTable();
-    forumDetails.initializeEvents();
+    forumDetails.documentReady();
 });

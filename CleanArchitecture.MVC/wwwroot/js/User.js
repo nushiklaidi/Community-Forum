@@ -1,6 +1,8 @@
 ﻿var users = null;
+var notyf = new Notyf();
 function Users() {
     var self = this;
+    const $addUserFrm = $('#addUserFrm');
 
     this.initializeDataTable = function () {
 
@@ -31,6 +33,42 @@ function Users() {
             };
             self.activate($user, user);
         });
+
+        $addUserFrm.on('click', '.update', function (e) {
+            e.preventDefault();
+            let $user = $(this);
+            let user = {
+                Id: $("#Id").val(),
+                UserName: $("#UserName").val(),
+                Email: $("#Email").val(),
+                Rating: $("#Rating").val(),
+                MemberSince: $("#MemberSince").val(),
+                RoleId: $("#RoleId").val()
+            };
+            self.update($user, user);
+        });
+    };
+
+    this.update = function ($user, user) {
+        var token = $('input[name="__RequestVerificationToken"]').val();
+        $.ajax({
+            type: "POST",
+            url: "/User/Edit",
+            data: {
+                __RequestVerificationToken: token,
+                model: user
+            },
+            success: function (data) {
+                notyf.success('The user has been updated');
+            },
+            error: function (xhr) {
+                swal({
+                    title: xhr.responseText,
+                    icon: "error",
+                    button: "Ok"
+                });
+            }
+        });
     };
 
     this.deActivate = function ($user, user) {
@@ -40,6 +78,7 @@ function Users() {
             data: { id: user.id },
             success: function (data) {
                 self.getUsers();
+                notyf.success('The user has been deactivated');
             },
             error: function (xhr) {
                 swal({
@@ -58,6 +97,7 @@ function Users() {
             data: { id: user.id },
             success: function (data) {
                 self.getUsers();
+                notyf.success('The user has been activated');
             },
             error: function (xhr) {
                 swal({

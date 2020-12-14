@@ -43,8 +43,7 @@ namespace CleanArchitecture.MVC.Controllers
             };
             return PartialView("_ForumsTable", model);
         }
-
-        [HttpGet]
+                
         public IActionResult ForumDetails(int id)
         {
             var forum = _forumService.GetById(forumId: id);

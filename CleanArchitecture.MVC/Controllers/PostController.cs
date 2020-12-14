@@ -12,12 +12,14 @@ namespace CleanArchitecture.MVC.Controllers
     public class PostController : Controller
     {
         private readonly IPostService _postService;
+        private readonly IForumService _forumService;
         private readonly IToastNotification _toastNotification;
 
-        public PostController(IToastNotification toastNotification, IPostService postService)
+        public PostController(IToastNotification toastNotification, IPostService postService, IForumService forumService)
         {
             _toastNotification = toastNotification;
             _postService = postService;
+            _forumService = forumService;
         }
 
         public IActionResult Index()

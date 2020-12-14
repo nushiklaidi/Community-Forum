@@ -9,6 +9,15 @@
     {
       "library": "sweetalert@2.1.2",
       "destination": "wwwroot/sweetalert/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "notyf@3.9.0",
+      "destination": "wwwroot/notyf/",
+      "files": [
+        "notyf.min.css",
+        "notyf.min.js"
+      ]
     }
   ]
 }

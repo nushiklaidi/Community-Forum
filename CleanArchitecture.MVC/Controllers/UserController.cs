@@ -5,8 +5,8 @@ using CleanArchitecture.Domain.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using NToastNotify;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.MVC.Controllers
@@ -15,13 +15,11 @@ namespace CleanArchitecture.MVC.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        private readonly IToastNotification _toastNotification;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserController(IUserService userService, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
+        public UserController(IUserService userService, UserManager<ApplicationUser> userManager)
         {
             _userService = userService;
-            _toastNotification = toastNotification;
             _userManager = userManager;
         }
 
@@ -60,9 +58,25 @@ namespace CleanArchitecture.MVC.Controllers
         [ValidateAntiForgeryToken]        
         public async Task<IActionResult> Edit(UserViewModel model)
         {
-            await _userService.Update(model);
-            _toastNotification.AddSuccessToastMessage("The user has been updated");
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await _userService.Update(model);
+                    return StatusCode(200);
+                }
+                else
+                {
+                    string errors = "";
+                    errors = string.Join(Environment.NewLine, ModelState.Values.SelectMany(v => v.Errors).Select(x => x.ErrorMessage));
+                    return StatusCode(400, errors);
+                }                
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(400, ex.Message);
+            }
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]
@@ -72,7 +86,6 @@ namespace CleanArchitecture.MVC.Controllers
             try
             {
                 await _userService.ActivateUser(id);
-                _toastNotification.AddSuccessToastMessage("The user has been activated");
                 return StatusCode(200);
             }
             catch (Exception ex)
@@ -89,7 +102,6 @@ namespace CleanArchitecture.MVC.Controllers
             try
             {
                 await _userService.DeactivateUser(id);
-                _toastNotification.AddSuccessToastMessage("The user has been deactivated");
                 return StatusCode(200);
             }
             catch (Exception ex)

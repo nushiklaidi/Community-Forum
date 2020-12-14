@@ -4,8 +4,8 @@
 
 <h4>User Profile</h4>
 <hr />
-<form method="post" asp-controller="User" asp-action="Edit" enctype="multipart/form-data">
-    <div class="row">
+<form>
+    <div id="addUserFrm" class="row">
         <div class="col-md-4 text-center">
             @if (Model.ImageUrl != null)
             {
@@ -20,37 +20,37 @@
                 <input asp-for="ProfileImageUrl" type="file" value="Upload" />
             </label>
         </div>
-        <div class="col-md-6">
-            <input asp-for="@Model.Id" hidden />
+        <div class="col-md-6" id="form">
+            <input asp-for="@Model.Id" id="Id" hidden />
             <input asp-for="@Model.RoleId" hidden />
             <div class="form-group">
                 <label asp-for="UserName"></label>
-                <input asp-for="UserName" class="form-control" />
+                <input asp-for="UserName" class="form-control" id="UserName"/>
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" disabled />
+                <input asp-for="Email" class="form-control" id="Email" disabled />
             </div>
             <div class="form-group">
                 <label asp-for="Rating"></label>
-                <input asp-for="Rating" class="form-control" disabled />
+                <input asp-for="Rating" class="form-control" id="Rating" disabled />
             </div>
             <div class="form-group">
                 <label asp-for="MemberSince"></label>
-                <input asp-for="MemberSince" class="form-control" disabled />
+                <input asp-for="MemberSince" class="form-control" id="MemberSince" disabled />
             </div>
             @if (User.IsInRole(AppConst.Role.AdminRole))
             {
                 <div class="form-group">
                     <label asp-for="RoleId"></label>
-                    <select asp-for="RoleId" asp-items="@Model.RoleList" class="form-control">
+                    <select asp-for="RoleId" asp-items="@Model.RoleList" class="form-control" id="RolId">
                         <option disabled selected>--Select Role--</option>
                     </select>
                 </div>
             }
             <div class="form-group">
-                <button type="submit" class="btn btn-success">Update</button>
+                <button class="btn btn-success update">Update</button>
                 <a asp-controller="Home" asp-action="Index" class="btn btn-warning" style="width:auto">Back to Home</a>
             </div>
         </div>
@@ -58,5 +58,6 @@
 </form>
 
 @section scripts{
+    <script src="/js/User.js"></script>
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }
