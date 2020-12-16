@@ -19,11 +19,18 @@ namespace CleanArchitecture.MVC.Controllers
             return View();
         }
 
+        public IActionResult NoAccess()
+        {
+            ViewBag.ErrorMessage = "You have not access for this page";
+            ViewBag.Contact = "Please contact with Administrator system";
+            return View("_ErrorPartial");
+        }
+
         public IActionResult Error()
         {
             var exceptionDetails = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
             ViewBag.ErrorMessage = exceptionDetails.Error.Message;
-            return View("Error");
+            return View("_ErrorPartial");
         }
 
         [Route("Error/{statusCode}")]
@@ -35,7 +42,7 @@ namespace CleanArchitecture.MVC.Controllers
                     ViewBag.ErrorMessage = "Page 404 - Sorry, the resource you requested could not be found";
                     break;
             }
-            return View("Error");
+            return View("_ErrorPartial");
         }
     }
 }

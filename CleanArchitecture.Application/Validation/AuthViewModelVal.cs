@@ -7,12 +7,10 @@ namespace CleanArchitecture.Application.Validation
     {
         public AuthViewModelVal()
         {
-            RuleFor(a => a.Username)
-                .NotEmpty().WithMessage("{PropertyName} should not be empty")
-                .NotNull();
+            RuleFor(a => a.Email)
+                .NotEmpty().WithMessage("{PropertyName} should not be empty");
             RuleFor(a => a.Password)
-                .NotEmpty().WithMessage("{PropertyName} should not be empty")
-                .NotNull();
+                .NotEmpty().WithMessage("{PropertyName} should not be empty");
         }
     }
 }

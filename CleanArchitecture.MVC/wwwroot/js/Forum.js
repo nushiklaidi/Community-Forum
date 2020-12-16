@@ -36,7 +36,7 @@ function Forums() {
                 self.getForums();
             },
             error: function (xhr) {
-                swal({
+                Swal.fire({
                     title: xhr.responseText,
                     icon: "error",
                     button: "Ok"

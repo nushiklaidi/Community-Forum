@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Domain.Model;
+﻿using CleanArchitecture.Application.ViewModels;
+using CleanArchitecture.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,5 +10,6 @@ namespace CleanArchitecture.Application.Intarfaces
     public interface IAuthService
     {
         ApplicationUser Authenticate(string username, string password);
+        Task AuthenticateUser(AuthViewModel model);
     }
 }

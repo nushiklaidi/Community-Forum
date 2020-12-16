@@ -43,7 +43,7 @@ function Users() {
                 Email: $("#Email").val(),
                 Rating: $("#Rating").val(),
                 MemberSince: $("#MemberSince").val(),
-                RoleId: $("#RoleId").val()
+                RoleId: $("#RolesId").val()
             };
             self.update($user, user);
         });
@@ -62,7 +62,7 @@ function Users() {
                 notyf.success('The user has been updated');
             },
             error: function (xhr) {
-                swal({
+                Swal.fire({
                     title: xhr.responseText,
                     icon: "error",
                     button: "Ok"
@@ -81,7 +81,7 @@ function Users() {
                 notyf.success('The user has been deactivated');
             },
             error: function (xhr) {
-                swal({
+                Swal.fire({
                     title: xhr.responseText,
                     icon: "error",
                     button: "Ok"
@@ -100,7 +100,7 @@ function Users() {
                 notyf.success('The user has been activated');
             },
             error: function (xhr) {
-                swal({
+                Swal.fire({
                     title: xhr.responseText,
                     icon: "error",
                     button: "Ok"

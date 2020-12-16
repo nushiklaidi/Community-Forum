@@ -46,12 +46,8 @@ namespace CleanArchitecture.MVC.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            if (id != null)
-            {
-                var modelDb = await _userService.Get(userId: id, currentUserId: currentUser.Id);
-                return View(modelDb);
-            }
-            return RedirectToAction(nameof(Index));
+            var modelDb = await _userService.Get(userId: id, currentUserId: currentUser.Id);                
+            return View(modelDb);
         }
 
         [HttpPost]

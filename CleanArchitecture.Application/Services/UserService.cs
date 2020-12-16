@@ -56,7 +56,7 @@ namespace CleanArchitecture.Application.Services
             //you can not view the profile
             if (modelDb.Id != currentUserId && adminUserRole.Name != AppConst.Role.AdminRole)
             {
-                throw new ApplicationException("You can't view another user profile");
+                throw new ApplicationException("You can not view another user profile");
             }
 
             var model = new UserViewModel()
