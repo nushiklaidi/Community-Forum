@@ -1,6 +1,8 @@
 ﻿var forums = null;
+var notyf = new Notyf();
 function Forums() {
     var self = this;
+    const $addOrEditFrm = $('#addOrEditFrm');
 
     this.initializeDataTable = function () {
 
@@ -25,15 +27,63 @@ function Forums() {
 
             self.delete($forum, forum);
         });
+
+        $addOrEditFrm.on('click', '.addOrEdit', function (e) {
+            e.preventDefault();
+            let $forum = $(this);
+            let forum = {
+                Id: $("#Id").val(),
+                Title: $("#Title").val(),
+                Description: $("#Description").val(),
+            };
+            self.addOrEdit($forum, forum);
+        });
     };
 
     this.delete = function ($forum, forum) {
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Forum/Delete",
+                    data: { id: forum.id },
+                    success: function (data) {
+                        self.getForums();
+                        notyf.success('The forum has been deleted');
+                    },
+                    error: function (xhr) {
+                        Swal.fire({
+                            title: xhr.responseText,
+                            icon: "error",
+                            button: "Ok"
+                        });
+                    }
+                });
+            }
+        });        
+    };
+
+    this.addOrEdit = function ($forum, forum) {
+        var token = $('input[name="__RequestVerificationToken"]').val();
         $.ajax({
             type: "POST",
-            url: "/Forum/Delete",
-            data: { id: forum.id },
+            url: "/Forum/AddOrEdit",
+            data: {
+                __RequestVerificationToken: token,
+                model: forum
+            },
             success: function (data) {
-                self.getForums();
+                if (forum.Id == 0)
+                    notyf.success('The forum has been created');
+                else
+                    notyf.success('The forum has been updated');
             },
             error: function (xhr) {
                 Swal.fire({

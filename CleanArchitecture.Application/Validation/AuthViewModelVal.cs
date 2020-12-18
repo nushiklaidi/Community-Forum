@@ -8,9 +8,9 @@ namespace CleanArchitecture.Application.Validation
         public AuthViewModelVal()
         {
             RuleFor(a => a.Email)
-                .NotEmpty().WithMessage("{PropertyName} should not be empty");
+                .NotEmpty();
             RuleFor(a => a.Password)
-                .NotEmpty().WithMessage("{PropertyName} should not be empty");
+                .NotEmpty();
         }
     }
 }

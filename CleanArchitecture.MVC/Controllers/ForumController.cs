@@ -95,12 +95,25 @@ namespace CleanArchitecture.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit(ForumViewModel model)
         {
-            await _forumService.Save(model: model);
-            if (model.Id == 0)
-                _toastNotification.AddSuccessToastMessage("The forum has been created");
-            else
-                _toastNotification.AddSuccessToastMessage("The forum has been updated");
-            return RedirectToAction(nameof(Index));
+            try
+            {                
+                if (ModelState.IsValid)
+                {
+                    await _forumService.Save(model: model);
+                    return StatusCode(200);
+                }
+                else
+                {
+                    string errors = "";
+                    errors = string.Join(Environment.NewLine, ModelState.Values.SelectMany(v => v.Errors).Select(x => x.ErrorMessage));
+                    return StatusCode(400, errors);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(400, ex.Message);
+            }
         }
 
         [Authorize(Roles = AppConst.Role.AdminRole)]
@@ -110,12 +123,10 @@ namespace CleanArchitecture.MVC.Controllers
             try
             {
                 await _forumService.Delete(forumId: id);
-                _toastNotification.AddSuccessToastMessage("The forum has been deleted");
                 return StatusCode(200);
             }
             catch (Exception ex)
             {
-
                 return StatusCode(400, ex.Message);
             }
         }

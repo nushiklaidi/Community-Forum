@@ -13,11 +13,9 @@ namespace CleanArchitecture.Application.Validation
         public ForumViewModelVal()
         {
             RuleFor(r => r.Title)
-                .NotEmpty()
-                .NotNull();
+                .NotEmpty();
             RuleFor(r => r.Description)
-                .NotEmpty()
-                .NotNull();
+                .NotEmpty();
         }
     }
 }
