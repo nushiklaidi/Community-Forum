@@ -70,6 +70,7 @@ namespace CleanArchitecture.MVC.Controllers
             }
             catch (Exception ex)
             {
+
                 return StatusCode(400, ex.Message);
             }
         }
@@ -101,6 +102,7 @@ namespace CleanArchitecture.MVC.Controllers
             }
             catch (Exception ex)
             {
+
                 return StatusCode(400, ex.Message);
             }
         }
